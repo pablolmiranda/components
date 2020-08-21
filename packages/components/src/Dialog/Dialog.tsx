@@ -34,6 +34,73 @@ import { Backdrop } from './Backdrop'
 import { DialogContext } from './DialogContext'
 import { Surface } from './Surface'
 
+/**
+ *
+ * Surface style usage
+ *
+ *         width: '463px',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        position: 'absolute',
+
+        width: '600px'
+        width: '500px'
+        width: '500px'
+
+        position: 'absolute', top: '5vh'
+
+                    bottom: '40px',
+            left: '40px',
+            maxHeight: '100%',
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            position: 'absolute',
+            right: '40px',
+            top: '40px',
+
+                      bottom: '100px',
+          maxHeight: '100%',
+          overflowX: 'auto',
+          overflowY: 'auto',
+          position: 'absolute',
+          top: '100px',
+
+        width: '600px',
+        maxHeight: '80%',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        position: 'relative',
+
+      width: '700px',
+      minHeight: '250px',
+      maxHeight: '80%',
+      overflowX: 'hidden',
+      overflowY: 'hidden',
+      position: 'relative',
+
+              width: '600px',
+        height: '500px',
+        maxHeight: '80%',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        position: 'relative',
+
+              surfaceStyles={{ height: '740px', width: '800px' }}
+
+                minHeight: '250px',
+  maxHeight: '80%',
+  width: '600px',
+
+
+                  surfaceStyles={{ width: '580px' }}
+
+                          surfaceStyles={{ position: 'absolute', top: '5rem' }}
+
+                                  surfaceStyles={{ height: '550px' }}
+
+
+          */
+
 export interface DialogProps {
   /**
    * When true, renders the Backdrop, Surface and it's contained content.
@@ -45,13 +112,6 @@ export interface DialogProps {
    * Specify a callback to be called each time this Dialog is closed
    */
   onClose?: () => void
-
-  /**
-   * Optional backdrop styles to merge with the Backdrop implementation. These
-   * must be a CSSProperty compatible key / value paired object. For example
-   * {backgroundColor: 'pink'}.
-   */
-  backdrop?: CSSProperties
 
   /**
    * Optional surface styles to merge with the Surface implementation. These
@@ -66,6 +126,21 @@ export interface DialogProps {
    */
   width?: ResponsiveValue<string>
   maxWidth?: ResponsiveValue<string>
+
+  /**
+   * Specify where the Dialog should be placed
+   * @default 'center'
+   */
+  drawer?: boolean
+
+  maxWidth?: ResponsiveValue<string>
+  height?: ResponsiveValue<string>
+  width?: ResponsiveValue<string>
+  vertical?: 'center' | 'top'
+
+  /**
+   *
+   */
 }
 
 export const Dialog: FC<DialogProps> = ({
