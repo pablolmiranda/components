@@ -38,6 +38,13 @@ import { Surface } from './Surface'
  *
  * Surface style usage
  *
+ *
+ *     width={['360px', '560px', '660px', '760px', '760px']}
+    maxWidth={['360px', '560px', '660px', '760px', '760px']}
+ *
+
+                 surfaceStyles={{ width: '580px' }}
+
  *         width: '463px',
         overflowX: 'hidden',
         overflowY: 'hidden',
