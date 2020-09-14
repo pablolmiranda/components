@@ -25,88 +25,14 @@
  */
 
 import React, { CSSProperties, FC } from 'react'
-import { CSSTransition } from 'react-transition-group'
-import { CSSObject } from 'styled-components'
+// import { CSSTransition } from 'react-transition-group'
+// import { CSSObject } from 'styled-components'
 import { ResponsiveValue } from 'styled-system'
 import { Portal } from '../Portal'
 import { useFocusTrap, useScrollLock } from '../utils'
 import { Backdrop } from './Backdrop'
 import { DialogContext } from './DialogContext'
 import { Surface } from './Surface'
-
-/**
- *
- * Surface style usage
- *
- *
- *     width={['360px', '560px', '660px', '760px', '760px']}
-    maxWidth={['360px', '560px', '660px', '760px', '760px']}
- *
-
-                 surfaceStyles={{ width: '580px' }}
-
- *         width: '463px',
-        overflowX: 'hidden',
-        overflowY: 'hidden',
-        position: 'absolute',
-
-        width: '600px'
-        width: '500px'
-        width: '500px'
-
-        position: 'absolute', top: '5vh'
-
-                    bottom: '40px',
-            left: '40px',
-            maxHeight: '100%',
-            overflowX: 'hidden',
-            overflowY: 'hidden',
-            position: 'absolute',
-            right: '40px',
-            top: '40px',
-
-                      bottom: '100px',
-          maxHeight: '100%',
-          overflowX: 'auto',
-          overflowY: 'auto',
-          position: 'absolute',
-          top: '100px',
-
-        width: '600px',
-        maxHeight: '80%',
-        overflowX: 'hidden',
-        overflowY: 'hidden',
-        position: 'relative',
-
-      width: '700px',
-      minHeight: '250px',
-      maxHeight: '80%',
-      overflowX: 'hidden',
-      overflowY: 'hidden',
-      position: 'relative',
-
-              width: '600px',
-        height: '500px',
-        maxHeight: '80%',
-        overflowX: 'hidden',
-        overflowY: 'hidden',
-        position: 'relative',
-
-              surfaceStyles={{ height: '740px', width: '800px' }}
-
-                minHeight: '250px',
-  maxHeight: '80%',
-  width: '600px',
-
-
-                  surfaceStyles={{ width: '580px' }}
-
-                          surfaceStyles={{ position: 'absolute', top: '5rem' }}
-
-                                  surfaceStyles={{ height: '550px' }}
-
-
-          */
 
 export interface DialogProps {
   /**
@@ -138,10 +64,17 @@ export interface DialogProps {
   height?: ResponsiveValue<string>
 
   /**
-   * Specify where the Dialog should be placed
+   * Specify where the Dialog should be placed horizontally
+   * (if `drawer=true` defaults to `right`)
    * @default 'center'
    */
-  position?: 'center' | 'top'
+  horizontal?: 'center' | 'left' | 'right'
+  /**
+   * Specify where the Dialog should be placed vertically
+   * NOTE: Ignored when `drawer=true`
+   * @default 'center'
+   */
+  vertical?: 'center' | 'top' | 'bottom'
 
   drawer?: boolean
 
@@ -153,7 +86,9 @@ export interface DialogProps {
 export const Dialog: FC<DialogProps> = ({
   // backdrop,
   drawer,
-  position,
+  horizontal,
+  vertical,
+
   children,
   isOpen,
   onClose,
@@ -175,32 +110,34 @@ export const Dialog: FC<DialogProps> = ({
     isEnabled: scrollLockEnabled,
   } = useScrollLock(isOpen, false)
 
-  const handleClose = () => {
-    onClose && onClose()
-  }
+  const handleClose = () => onClose && onClose()
+
+  const horizontalPlacement =
+    horizontal === undefined ? (drawer ? 'right' : 'center') : horizontal
 
   return (
-    <DialogContext.Provider
-      value={{
-        closeModal: handleClose,
-        disableFocusTrap,
-        disableScrollLock,
-        enableFocusTrap,
-        enableScrollLock,
-        focusTrapEnabled,
-        focusTrapRef,
-        scrollLockEnabled,
-      }}
-    >
-      {(state: string) => (
+    isOpen && (
+      <DialogContext.Provider
+        value={{
+          closeModal: handleClose,
+          disableFocusTrap,
+          disableScrollLock,
+          enableFocusTrap,
+          enableScrollLock,
+          focusTrapEnabled,
+          focusTrapRef,
+          scrollLockEnabled,
+        }}
+      >
         <Portal
+          horizontal={horizontalPlacement}
+          vertical={vertical}
           ref={(node) => {
             focusRef(node)
             scrollRef(node)
           }}
         >
           <Backdrop
-            className={state}
             onClick={onClose}
             // visible={backdrop === undefined ? true : !!backdrop}
             // style={
@@ -211,16 +148,14 @@ export const Dialog: FC<DialogProps> = ({
           />
           <Surface
             style={surfaceStyles}
-            className={state}
             width={width}
             maxWidth={maxWidth}
             drawer={drawer}
-            position={position}
           >
             {children}
           </Surface>
         </Portal>
-      )}
-    </DialogContext.Provider>
+      </DialogContext.Provider>
+    )
   )
 }

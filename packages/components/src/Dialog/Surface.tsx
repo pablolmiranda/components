@@ -32,31 +32,17 @@ import {
 } from '@looker/design-tokens'
 import React, { FC, useContext, useEffect, useRef } from 'react'
 import styled, { CSSObject, css } from 'styled-components'
-import {
-  ColorProps,
-  BorderProps,
-  BoxShadowProps,
-  boxShadow,
-  border,
-  color,
-  LayoutProps,
-  layout,
-} from 'styled-system'
+import { LayoutProps, layout } from 'styled-system'
 import { useGlobalHotkeys } from '../utils'
 import { DialogContext } from './DialogContext'
 
 interface SurfaceProps
   extends CompatibleHTMLProps<HTMLDivElement>,
-    BorderProps,
-    BoxShadowProps,
-    ColorProps,
     LayoutProps {
   surfaceStyles?: CSSObject
-  anchor?: 'right'
-  animationState?: string
+  // animationState?: string
 
   drawer?: boolean
-  position?: string
 }
 
 const SurfaceLayout: FC<SurfaceProps> = ({
@@ -98,24 +84,26 @@ const surfaceTransition = () => css`
 `
 
 const drawerCSS = css`
-  align-self: flex-end;
   height: 100%;
+`
+
+const notDrawerCSS = css`
+  border-radius: ${({ theme }) => theme.radii.medium};
+  box-shadow: ${({ theme }) => theme.shadows[3]};
+  max-height: 90vh;
 `
 
 export const Surface = styled(SurfaceLayout)`
   ${reset}
-  ${boxShadow}
-  ${border}
   ${layout}
 
-  ${color}
-
+  background: ${({ theme }) => theme.colors.background};
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform ${surfaceTransition}, opacity ${surfaceTransition};
+  /* transition: transform ${surfaceTransition}, opacity ${surfaceTransition}; */
 
-  ${({ drawer }) => drawer && drawerCSS}
+  ${({ drawer }) => (drawer ? drawerCSS : notDrawerCSS)}
 
   &:focus {
     outline: none;
@@ -134,10 +122,5 @@ export const Surface = styled(SurfaceLayout)`
 `
 
 Surface.defaultProps = {
-  backgroundColor: 'background',
-  borderRadius: 'medium',
-  boxShadow: 3,
-  color: 'text5',
-  maxHeight: '90vh',
   maxWidth: ['90vw', '90vw', '600px'],
 }
