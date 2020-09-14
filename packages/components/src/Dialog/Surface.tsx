@@ -54,6 +54,9 @@ interface SurfaceProps
   surfaceStyles?: CSSObject
   anchor?: 'right'
   animationState?: string
+
+  drawer?: boolean
+  position?: string
 }
 
 const SurfaceLayout: FC<SurfaceProps> = ({
@@ -94,6 +97,11 @@ const surfaceTransition = () => css`
     `${props.theme.transitions.durationModerate} ${props.theme.easings.ease}`}
 `
 
+const drawerCSS = css`
+  align-self: flex-end;
+  height: 100%;
+`
+
 export const Surface = styled(SurfaceLayout)`
   ${reset}
   ${boxShadow}
@@ -106,6 +114,8 @@ export const Surface = styled(SurfaceLayout)`
   flex-direction: column;
   position: relative;
   transition: transform ${surfaceTransition}, opacity ${surfaceTransition};
+
+  ${({ drawer }) => drawer && drawerCSS}
 
   &:focus {
     outline: none;

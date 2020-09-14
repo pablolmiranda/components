@@ -24,37 +24,24 @@
 
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Button,
   DialogContent,
-  Dialog,
   DialogManager,
-  Confirm,
-  Space,
+  DialogHeader,
+  DialogFooter,
+  ButtonTransparent,
+  DialogManagerProps,
 } from '@looker/components'
+import { Story } from '@storybook/react/types-6-0'
 
-export const All = () => (
-  <Space>
-    <DialogFixedWidth />
-    <DialogResponsiveWidth />
-    <DialogManagerWidth />
-    <ConfirmWidth />
-  </Space>
-)
-
-export default {
-  component: All,
-  title: 'Dialog/MaxWidth',
-}
-
-export const DialogFixedWidth = () => {
-  const [isOpen, setOpen] = useState(false)
-  const handleClick = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-  return (
-    <>
-      <Dialog isOpen={isOpen} onClose={handleClose} maxWidth="300px">
+const Template: Story<DialogManagerProps> = (args) => (
+  <DialogManager
+    {...args}
+    content={
+      <>
+        <DialogHeader>My Awesome Dialog</DialogHeader>
         <DialogContent>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et eros
           sed nisi pellentesque vulputate ac eu augue. Sed commodo sagittis
@@ -63,67 +50,25 @@ export const DialogFixedWidth = () => {
           aptent taciti sociosqu ad litora torquent per conubia nostra, per
           inceptos himenaeos.
         </DialogContent>
-      </Dialog>
-      <Button onClick={handleClick}>Open fixed max width dialog</Button>
-    </>
-  )
+        <DialogFooter>
+          <Button>Button!</Button>
+          <ButtonTransparent>Other Button</ButtonTransparent>
+        </DialogFooter>
+      </>
+    }
+  >
+    <Button>Open Dialog</Button>
+  </DialogManager>
+)
+
+export const Primary = Template.bind({})
+
+Primary.args = {
+  drawer: true,
+  // maxWidth: ['90vw', '50vw', '500px'],
 }
 
-export const DialogResponsiveWidth = () => {
-  const [isOpen, setOpen] = useState(false)
-  const handleClick = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-  return (
-    <>
-      <Dialog
-        isOpen={isOpen}
-        onClose={handleClose}
-        maxWidth={['90vw', '50vw', '500px']}
-      >
-        <DialogContent>
-          Sed a velit nec ligula maximus lacinia. Morbi congue imperdiet sem,
-          rhoncus convallis enim bibendum et. Class aptent taciti sociosqu ad
-          litora torquent per conubia nostra, per inceptos himenaeos.
-        </DialogContent>
-      </Dialog>
-      <Button onClick={handleClick}>Open dynamic max width dialog</Button>
-    </>
-  )
-}
-
-export const DialogManagerWidth = () => {
-  return (
-    <DialogManager
-      content={
-        <DialogContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et eros
-          sed nisi pellentesque vulputate ac eu augue. Sed commodo sagittis
-          neque, vel vulputate massa.
-        </DialogContent>
-      }
-      maxWidth="200px"
-    >
-      <Button>Open static width DialogManager</Button>
-    </DialogManager>
-  )
-}
-
-export const ConfirmWidth = () => {
-  return (
-    <Confirm
-      title="Confirm Something"
-      message="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-      onConfirm={(close) => {
-        alert('You did something')
-        close()
-      }}
-      maxWidth={['10rem', '20rem', '30rem', '40rem']}
-    >
-      {(open) => (
-        <Button onClick={open} mr="small">
-          Open responsive width Confirm dialog
-        </Button>
-      )}
-    </Confirm>
-  )
+export default {
+  component: DialogManager,
+  title: 'DialogManager',
 }

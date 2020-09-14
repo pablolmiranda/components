@@ -132,18 +132,18 @@ export interface DialogProps {
    * @default auto
    */
   width?: ResponsiveValue<string>
+
   maxWidth?: ResponsiveValue<string>
+
+  height?: ResponsiveValue<string>
 
   /**
    * Specify where the Dialog should be placed
    * @default 'center'
    */
-  drawer?: boolean
+  position?: 'center' | 'top'
 
-  maxWidth?: ResponsiveValue<string>
-  height?: ResponsiveValue<string>
-  width?: ResponsiveValue<string>
-  vertical?: 'center' | 'top'
+  drawer?: boolean
 
   /**
    *
@@ -151,7 +151,9 @@ export interface DialogProps {
 }
 
 export const Dialog: FC<DialogProps> = ({
-  backdrop,
+  // backdrop,
+  drawer,
+  position,
   children,
   isOpen,
   onClose,
@@ -190,41 +192,35 @@ export const Dialog: FC<DialogProps> = ({
         scrollLockEnabled,
       }}
     >
-      <CSSTransition
-        classNames="modal"
-        mountOnEnter
-        unmountOnExit
-        in={isOpen}
-        timeout={{ enter: 0, exit: 250 }}
-      >
-        {(state: string) => (
-          <Portal
-            ref={(node) => {
-              focusRef(node)
-              scrollRef(node)
-            }}
+      {(state: string) => (
+        <Portal
+          ref={(node) => {
+            focusRef(node)
+            scrollRef(node)
+          }}
+        >
+          <Backdrop
+            className={state}
+            onClick={onClose}
+            // visible={backdrop === undefined ? true : !!backdrop}
+            // style={
+            //   !!backdrop && backdrop !== true
+            //     ? (backdrop as CSSObject)
+            //     : undefined
+            // }
+          />
+          <Surface
+            style={surfaceStyles}
+            className={state}
+            width={width}
+            maxWidth={maxWidth}
+            drawer={drawer}
+            position={position}
           >
-            <Backdrop
-              className={state}
-              onClick={onClose}
-              visible={backdrop === undefined ? true : !!backdrop}
-              style={
-                !!backdrop && backdrop !== true
-                  ? (backdrop as CSSObject)
-                  : undefined
-              }
-            />
-            <Surface
-              style={surfaceStyles}
-              className={state}
-              width={width}
-              maxWidth={maxWidth}
-            >
-              {children}
-            </Surface>
-          </Portal>
-        )}
-      </CSSTransition>
+            {children}
+          </Surface>
+        </Portal>
+      )}
     </DialogContext.Provider>
   )
 }

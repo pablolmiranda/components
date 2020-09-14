@@ -49,7 +49,7 @@ export const Backdrop = styled.div.attrs((props: BackdropProps) => ({
   bottom: 0;
   cursor: default;
   left: 0;
-  opacity: ${(props) => props.opacity || 0.4};
+  opacity: ${(props) => props.opacity};
   position: fixed;
   right: 0;
   top: 0;
@@ -62,7 +62,7 @@ export const Backdrop = styled.div.attrs((props: BackdropProps) => ({
 `
 
 Backdrop.defaultProps = {
-  backgroundColor: 'ui2',
+  backgroundColor: 'ui5',
   opacity: 0.6,
   visible: true,
 }
