@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `Select`, `SelectMulti` and `InputSearch` now support `isLoading` and `detail` prop on options
+- `InputSearch` experimentally supports `onSelectOption`, `changeOnSelect`, `clearOnClose` and all `Select` props except `isFilterable`, `onFilter`, `showCreate` and `formatCreateLabel`
+- `Combobox` and `ComboboxMulti` `openOnClick` prop
+- `ComboboxInput` now supports `freeInput` prop
 - update Chip to receive prop prefix
 - `useClickable` hook
 - `InputColor` now includes `name` in `onChange` response event
@@ -20,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `InputSearch` `onChange` callback argument is now a string rather than an event
 - `Chip` / `ChipButton` now call `onClick` on enter or space key
 - `ComponentsProvider` now takes `colors` prop instead of `coreColors` and accepts `CoreColors & IntentColors`
 - `theme.fonts.*` updates
@@ -32,18 +37,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `ComboboxMulti` issue with chips not updating reflecting updated option labels
 - `Popover` cancel first click outside behavior not working with an `onMouseUp` used anywhere on the page
 - `SelectMulti` failing to appropriately show "No options" when `showCreate` is used
 - `Select` overwriting search value with the current option value if the option's value and label are different
 - Allow `Icon` colors to be modified when used inside a `MenuItem` detail prop.
 - Miscellaneous Storybook fixes to silence console warnings
 
-###
-
-- `Tooltip` & `Popover` no longer support (optional) arrow indicator
-
 ### Removed
 
+- `InputSearch` `onClear` – use `onChange` with a check for empty value instead
+- `InputSearch` `hideControls` – use `isClearable={false}` instead
+- `Tooltip` & `Popover` no longer support (optional) arrow indicator
 - `theme.colors.palette` is no longer available (`palette` _can_ be import from `@looker/design-tokens` but this is a legacy behavior and is not encouraged)
 - `prismTheme` is no longer published
 
