@@ -47,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - `InputSearch` `onClear` – use `onChange` with a check for empty value instead
-- `InputSearch` `hideControls` – use `isClearable={false}` instead
+- `InputSearch` and `InputChips` `hideControls` – use `isClearable={false}` instead
 - `Tooltip` & `Popover` no longer support (optional) arrow indicator
 - `theme.colors.palette` is no longer available (`palette` _can_ be import from `@looker/design-tokens` but this is a legacy behavior and is not encouraged)
 - `prismTheme` is no longer published
