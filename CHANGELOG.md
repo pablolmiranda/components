@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `Accordion` now supports `indicatorColor` property
+- `Chip` now supports `prefix` property
 - `useClickable` hook
 - `InputColor` now includes `name` in `onChange` response event
 - `InputChips` and `SelectMulti` chip selection and copy-pasting
