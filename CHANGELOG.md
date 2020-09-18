@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `Accordion` now supports `indicatorColor` property
 - `useClickable` hook
 - `InputColor` now includes `name` in `onChange` response event
 - `InputChips` and `SelectMulti` chip selection and copy-pasting
@@ -37,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allow `Icon` colors to be modified when used inside a `MenuItem` detail prop.
 - Miscellaneous Storybook fixes to silence console warnings
 
-###
+### Remove
 
 - `Tooltip` & `Popover` no longer support (optional) arrow indicator
 
