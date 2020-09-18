@@ -81,6 +81,7 @@ export interface TreeProps extends AccordionProps {
 }
 
 const indicatorProps: AccordionIndicatorProps = {
+  indicatorColor: 'text4',
   indicatorGap: 'xsmall',
   indicatorIcons: { close: 'ArrowRight', open: 'ArrowDown' },
   indicatorPosition: 'left',
