@@ -28,6 +28,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import { color, TextColorProps } from '@looker/design-tokens'
 import { AccordionDisclosure } from '../Accordion'
+import { Icon } from '../Icon'
 import { TreeItemLabel } from './TreeItem'
 
 export interface TreeGroupProps extends TextColorProps {
@@ -59,7 +60,7 @@ export const TreeGroupLabel = styled.div`
 `
 
 export const TreeGroup = styled(TreeGroupLayout)`
-  ${TreeItemLabel}, ${TreeGroupLabel}, ${AccordionDisclosure} {
+  ${TreeItemLabel}, ${TreeGroupLabel}, ${AccordionDisclosure}, ${Icon} {
     ${color}
   }
 `

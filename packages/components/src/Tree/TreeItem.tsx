@@ -250,7 +250,7 @@ export const TreeItem = styled(TreeItemLayout)`
     Note: first-child pseudo-selector is here to give this selector
     more specificity over TreeGroup.
   */
-  ${TreeItemLabel}:first-child {
+  ${TreeItemLabel}:first-child, ${Icon}:first-child {
     ${color}
   }
 `
