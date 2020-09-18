@@ -54,7 +54,7 @@ export const defaultFontFallbacks = {
 
 export const defaultFonts: FontFamilyChoices = {
   body: '"Roboto"',
-  brand: '"Red Hat Display"',
+  brand: '"Google Sans"',
   code: '"Roboto Mono"',
 }
 
