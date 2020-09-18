@@ -23,40 +23,36 @@
  SOFTWARE.
 
  */
+
+import React, { FC } from 'react'
 import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+const Layout: FC<{ className?: string }> = ({ className }) => (
+  <div className={className} />
+)
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
-
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
-  }
+export const FauxPieChart = styled(Layout)`
+  background: ${({
+    theme: {
+      colors: { background, inform, positive, warn, critical, key, neutral },
+    },
+  }) => `radial-gradient(circle closest-side, transparent 66%, ${background} 0),
+    conic-gradient(
+      ${inform} 0,
+      ${inform} 38%,
+      ${positive} 0,
+      ${positive} 61%,
+      ${warn} 0,
+      ${warn} 77%,
+      ${critical} 0,
+      ${critical} 87%,
+      ${key} 0,
+      ${key} 93%,
+      ${neutral} 0,
+      ${neutral} 100%
+    )`};
+  height: 100%;
+  outline: 1px solid #ccc;
+  position: relative;
+  width: 100%;
 `
-
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }

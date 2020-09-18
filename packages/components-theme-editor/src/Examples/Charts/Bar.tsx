@@ -23,40 +23,51 @@
  SOFTWARE.
 
  */
+
+import { Box } from '@looker/components'
+import React, { FC } from 'react'
 import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+const FauxChartLayout: FC<{ className?: string }> = ({ className }) => (
+  <ul className={className}>
+    <li>
+      <Box mx="large" height="20%" title="Gouda" bg="inform"></Box>
+    </li>
+    <li>
+      <Box mx="large" height="60%" title="Cheddar" bg="positive"></Box>
+    </li>
+    <li>
+      <Box mx="large" height="90%" title="Swiss" bg="warn"></Box>
+    </li>
+    <li>
+      <Box mx="large" height="40%" title="Blue" bg="critical"></Box>
+    </li>
+  </ul>
+)
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
+export const FauxBarChart = styled(FauxChartLayout)`
+  display: table;
+  height: calc(100% - 1.5rem);
+  table-layout: fixed;
+  width: 100%;
 
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
+  li {
+    display: table-cell;
+    height: 90%;
+    position: relative;
+    vertical-align: bottom;
+  }
+
+  div::before {
+    content: attr(title);
+    display: block;
+    font-size: ${({ theme }) => theme.fontSizes.small};
+    left: 0;
+    padding: 5px 1rem 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 100%;
+    word-wrap: break-word;
   }
 `
-
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }

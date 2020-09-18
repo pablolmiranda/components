@@ -23,40 +23,25 @@
  SOFTWARE.
 
  */
-import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+import { Swatch, Theme, Heading, Card, SpaceVertical } from '@looker/components'
+import React, { useContext } from 'react'
+import { ThemeContext } from 'styled-components'
+import omit from 'lodash/omit'
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
+export const ColorSwatches = () => {
+  const theme = useContext<Theme>(ThemeContext)
 
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
-  }
-`
+  const colors = omit(theme.colors, 'palette')
 
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }
+  const swatches = Object.entries(colors).map(([name, color]) => (
+    <Card key={name} width="100%">
+      <Swatch color={color} width="100%" />
+      <Heading fontSize="xsmall" py="xxsmall" px="small" as="h5">
+        {name}
+      </Heading>
+    </Card>
+  ))
+
+  return <SpaceVertical gap="xxsmall">{swatches}</SpaceVertical>
+}

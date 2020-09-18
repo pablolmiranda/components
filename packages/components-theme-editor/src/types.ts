@@ -23,40 +23,16 @@
  SOFTWARE.
 
  */
-import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+import {
+  CoreColors,
+  FontFamilyChoices,
+  IntentColors,
+} from '@looker/design-tokens'
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
+export type SpecifiableColors = CoreColors & IntentColors
 
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
-  }
-`
-
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }
+export interface ThemeEditableProps {
+  colors?: Partial<SpecifiableColors>
+  fontFamilies?: Partial<FontFamilyChoices>
+}

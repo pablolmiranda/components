@@ -23,40 +23,27 @@
  SOFTWARE.
 
  */
-import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+import { FieldColor } from '@looker/components'
+import capitalize from 'lodash/capitalize'
+import React, { FC, FormEvent } from 'react'
+import { SpecifiableColors } from '@looker/design-tokens/src'
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
+export interface ThemeFieldColorProps {
+  color: string
+  colors?: Partial<SpecifiableColors>
+  onChange: (event: FormEvent<HTMLInputElement>) => void
+}
 
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
-  }
-`
-
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }
+export const ThemeFieldColor: FC<ThemeFieldColorProps> = ({
+  color,
+  colors,
+  onChange,
+}) => (
+  <FieldColor
+    label={capitalize(color)}
+    name={color}
+    value={colors && colors[color]}
+    onChange={onChange}
+  />
+)

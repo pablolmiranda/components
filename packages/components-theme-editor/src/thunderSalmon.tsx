@@ -23,40 +23,25 @@
  SOFTWARE.
 
  */
-import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+import React, { FC } from 'react'
+import { ButtonProps, ButtonTransparent } from '@looker/components'
+import { ThemeEditableProps } from './types'
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
+export const thunderSalmon: ThemeEditableProps = {
+  colors: {
+    background: 'lightsalmon',
+    critical: '#f23900',
+    inform: '#ff6991',
+    key: 'salmon',
+    link: '#420f00',
+    positive: '#ffc8b7',
+    text: 'white',
+    warn: '#ffd769',
+  },
+  fontFamilies: { body: 'Papyrus', brand: 'Impact', code: 'Papyrus' },
+}
 
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
-  }
-`
-
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }
+export const ThunderSalmon: FC<ButtonProps> = (props) => (
+  <ButtonTransparent {...props}>⚡️ 🍣</ButtonTransparent>
+)

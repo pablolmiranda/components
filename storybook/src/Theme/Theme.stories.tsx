@@ -23,40 +23,41 @@
  SOFTWARE.
 
  */
-import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+import { Grid } from '@looker/components'
+import React, { FC } from 'react'
+import { Editor, EditorProps } from './Editor'
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
+export const ThemeEditor: FC<EditorProps> = (props) => (
+  <>
+    <Editor {...props} />
+  </>
+)
 
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
-  }
-`
+export const CompareThemes: FC = () => (
+  <Grid m="xlarge" gap="large" columns={4}>
+    <Editor name="Default" />
+    <Editor
+      name="Generated"
+      themeCustomizations={{
+        colors: { key: '#6C43E0' },
+      }}
+    />
+    <Editor
+      name="Customer Blue"
+      themeCustomizations={{
+        colors: { key: '#116DFF' },
+      }}
+    />
+    <Editor
+      name="THUNDER Salmon"
+      themeCustomizations={{
+        colors: { background: '#000000', key: '#ff3ca0', text: '#FFFFFF' },
+      }}
+    />
+  </Grid>
+)
 
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }
+export default {
+  title: 'Theme',
+}

@@ -23,40 +23,44 @@
  SOFTWARE.
 
  */
-import styled from 'styled-components'
-import { Link } from '../Link'
-import { Paragraph } from '../Text'
-import { TooltipProps } from './Tooltip'
-export const TooltipContent = styled(Paragraph).attrs(
-  (props: TooltipProps) => ({
-    fontSize: 'xsmall',
-    lineHeight: 'xsmall',
-    m: 'none',
-    maxWidth: props.width,
-    p: 'xsmall',
-    width: 'auto',
-  })
-)`
-  color: inherit;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-  text-transform: none;
-  white-space: normal;
-  word-break: break-word;
 
-  ${Link} {
-    color: ${(props) => props.theme.colors.keyAccent};
-    text-decoration: underline;
+import {
+  Card,
+  CardContent,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from '@looker/components'
+import {
+  ComponentSuite,
+  ColorSwatches,
+  FauxDashboard,
+} from '@looker/components-theme-editor'
+import React from 'react'
 
-    &:focus,
-    &:hover {
-      color: ${(props) => props.theme.colors.keySubtle};
-    }
-
-    &:active {
-      color: ${(props) => props.theme.colors.keyText};
-    }
-  }
-`
-
-TooltipContent.defaultProps = { textAlign: 'center', width: '16rem' }
+export const Examples = () => (
+  <Card width="100%">
+    <CardContent>
+      <Tabs>
+        <TabList>
+          <Tab>Colors</Tab>
+          <Tab>Components</Tab>
+          <Tab>Faux Dashboard</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <ColorSwatches />
+          </TabPanel>
+          <TabPanel>
+            <ComponentSuite />
+          </TabPanel>
+          <TabPanel>
+            <FauxDashboard />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </CardContent>
+  </Card>
+)
