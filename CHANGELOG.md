@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `GoogleFontsLoader`
 - `ComponentsProvider` now supports `loadGoogleFonts` which leverages `GoogleFontsLoader`
 - New `FeedbackOutline` icon artwork
+- `TabList` now supports `SpaceProps` and `fontSize`
 
 ### Changed
 
@@ -28,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `theme.fontWeights.extraBold` & `theme.fontWeights.light` removed
 - `Tree` child `AccordionDisclosure` now receives font-weight value from styled-components selector
 - `Prompt` / `usePrompt` now _optionally_ support `clearOnCancel` behavior
+- `TabList` w/ `distribute` now uses default "small" `fontSize`
 
 ### Fixed
 
