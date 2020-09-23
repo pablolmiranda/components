@@ -32,20 +32,27 @@ import {
   Heading,
   SpaceVertical,
   useActionListSelectManager,
+  ActionListManagerProps,
 } from '@looker/components'
-import { withKnobs, boolean } from '@storybook/addon-knobs'
+import { Story } from '@storybook/react/types-6-0'
 import React from 'react'
 import { columns, data } from './data'
 import { items } from './items'
 
-export { Sortable } from './ActionListSortable.stories'
-
-export default {
-  decorators: [withKnobs],
-  title: 'ActionList',
+interface DemoProps extends ActionListManagerProps {
+  isLoading?: boolean
+  noResults?: boolean
+  noResultsDisplay: boolean
+  bulk: boolean
+  select: boolean
 }
 
-export const ActionListExample = () => {
+const Template: Story<DemoProps> = ({
+  bulk,
+  noResultsDisplay,
+  select,
+  ...args
+}) => {
   const allPageItems = data.map(({ pdtName }) => pdtName)
 
   const {
@@ -70,7 +77,7 @@ export const ActionListExample = () => {
     alert(`Performing a bulk action on these items: \n${selections.join(', ')}`)
   }
 
-  const noResultsDisplay = boolean('Custom "noResultsDisplay"', true) && (
+  const customResultsDisplay = noResultsDisplay && (
     <SpaceVertical align="center">
       <Icon size="xlarge" name="Beaker" color="key" />
       <Heading>The mad scientists have nothing for you...</Heading>
@@ -98,19 +105,27 @@ export const ActionListExample = () => {
   }
 
   return (
-    <ActionListManager
-      isLoading={boolean('isLoading', false)}
-      noResults={boolean('noResults', false)}
-      noResultsDisplay={noResultsDisplay}
-    >
+    <ActionListManager {...args} noResultsDisplay={customResultsDisplay}>
       <ActionList
-        select={boolean('Select Items', true) ? selectConfig : undefined}
-        bulk={boolean('Bulk Actions', true) ? bulkActionsConfig : undefined}
+        select={select ? selectConfig : undefined}
+        bulk={bulk ? bulkActionsConfig : undefined}
         columns={columns}
-        headerRowId="all-pdts"
       >
         {items}
       </ActionList>
     </ActionListManager>
   )
+}
+
+export const Primary = Template.bind({})
+Primary.args = {
+  bulk: true,
+  isLoading: false,
+  noResults: false,
+  noResultsDisplay: true,
+  select: true,
+}
+
+export default {
+  title: 'ActionList',
 }
