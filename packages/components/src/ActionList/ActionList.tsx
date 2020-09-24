@@ -24,7 +24,8 @@
 
  */
 
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { reset } from '@looker/design-tokens'
 import React, { FC, ReactNode } from 'react'
 import { MixedBoolean } from '../Form'
 import { useID } from '../utils/useID'
@@ -33,13 +34,8 @@ import {
   ActionListHeader,
   generateActionListHeaderColumns,
 } from './ActionListHeader'
-import { ActionListItemColumn } from './ActionListItemColumn'
-import { ActionListRowColumns } from './ActionListRow'
 import { ActionListContext } from './ActionListContext'
-import { ActionListHeaderColumn } from './ActionListHeader/ActionListHeaderColumn'
 import {
-  getPrimaryKeyColumnIndices,
-  primaryKeyColumnCSS,
   getNumericColumnIndices,
   numericColumnCSS,
 } from './utils/actionListFormatting'
@@ -52,11 +48,6 @@ export interface ActionListColumn {
    * Note: A column object's id should match a key in your data object template
    */
   id: string
-  /**
-   * Determines whether a given column is a primary key or not
-   * @default false
-   */
-  primaryKey?: boolean
   /**
    * In some locales, we may change horizontal alignment of 'number'
    * @default 'string'
@@ -192,41 +183,80 @@ export const ActionListLayout: FC<ActionListProps> = ({
 
   return (
     <ActionListContext.Provider value={context}>
-      <div className={className}>
-        {actionListHeader}
-        {bulk && select && select.selectedItems.length > 0 && (
-          <ActionListControlBar {...bulk} />
-        )}
-        <div>{children}</div>
-      </div>
+      <table className={className}>
+        <thead>
+          {actionListHeader}
+          {bulk && select && select.selectedItems.length > 0 && (
+            <ActionListControlBar {...bulk} />
+          )}
+        </thead>
+        <tbody>{children}</tbody>
+      </table>
     </ActionListContext.Provider>
   )
 }
 
+interface ColumnProps {
+  /**
+   * @default 'medium'
+   */
+  size?: 'small' | 'medium' | 'large'
+
+  /**
+   * @default 'visible'
+   */
+  visibility?: 'visible' | 'collapse' | 'hidden'
+}
+
+const Column = styled.col<ColumnProps>`
+  visibility: ${({ visibility }) => visibility};
+  width: ${({ size }) =>
+    size === 'small' ? '3rem' : size === 'large' ? '20rem' : '12rem'};
+`
+
+const firstCellNoPadding = css`
+  tr {
+    td,
+    th {
+      &:first-child {
+        padding: 0;
+      }
+    }
+  }
+`
+
 export const ActionList = styled(ActionListLayout)<ActionListProps>`
-  ${ActionListRowColumns} {
-    align-items: center;
-    display: grid;
-    grid-template-columns: ${(props) =>
-      props.columns.map((column) => `${column.widthPercent}%`).join(' ')};
+  ${reset}
+
+  border-spacing: 0;
+  font-size: ${({ theme }) => theme.fontSizes.xsmall};
+  width: 100%;
+
+  td,
+  th {
+    padding: 0 ${({ theme }) => theme.space.medium};
   }
 
-  ${/* sc-selector */ ActionListItemColumn}:first-child {
-    padding-left: ${({ select, theme }) =>
-      select ? theme.space.none : undefined};
+  tbody td {
+    color: ${({ theme }) => theme.colors.text4};
+    height: 3.25rem;
   }
 
-  ${/* sc-selector */ ActionListHeaderColumn}:first-child {
-    padding-left: ${({ select, theme }) =>
-      select ? theme.space.none : undefined};
+  thead th {
+    color: ${({ theme }) => theme.colors.text5};
+    height: 3.5rem;
   }
 
-  ${/* sc-selector */ ActionListItemColumn},
-  ${/* sc-selector */ ActionListHeaderColumn} {
-    display: flex;
-    padding: ${(props) => props.theme.space.small};
+  tr {
+    td,
+    th {
+      &:last-child {
+        padding-right: 0;
+      }
+    }
   }
 
+  /* If select is active first cell is checkbox and needs no padding */
+  ${({ select }) => select && firstCellNoPadding}
   ${({ columns }) => numericColumnCSS(getNumericColumnIndices(columns))}
-  ${({ columns }) => primaryKeyColumnCSS(getPrimaryKeyColumnIndices(columns))}
 `
